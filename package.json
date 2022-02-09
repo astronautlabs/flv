@@ -1,0 +1,26 @@
+{
+  "name": "@astronautlabs/flv",
+  "version": "0.0.1",
+  "description": "Adobe Flash Video (FLV)",
+  "main": "dist/index.js",
+  "scripts": {
+    "clean": "rimraf dist dist.esm",
+    "build": "npm run clean && tsc -b && tsc -b tsconfig.esm.json",
+    "sample:server": "npm run build && node dist/server.example",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "npm run build"
+  },
+  "author": "Astronaut Labs",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/chai": "^4.3.0",
+    "chai": "^4.3.6",
+    "razmin": "^1.1.7",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "@astronautlabs/amf": "^0.0.3",
+    "@astronautlabs/bitstream": "^3.1.1"
+  }
+}
