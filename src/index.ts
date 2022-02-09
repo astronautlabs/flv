@@ -11,13 +11,16 @@ export class Header extends BitstreamElement {
     @Reserved(1) $reserved2 : number;
     @Field(1) video : boolean;
     @Field(8*4) dataOffset : number;
-    @Marker() $standardHeaderEnd;
+
+    @VariantMarker() $variant;
+    @Marker() $remainder;
+
+    @Field((i : DefaultHeader) => 8*(i.dataOffset - i.measureTo(i => i.$remainder)))
+    data : Uint8Array;
 }
 
 @DefaultVariant()
 export class DefaultHeader extends Header {
-    @Field((i : DefaultHeader) => 8*(i.dataOffset - i.measureTo(i => i.$standardHeaderEnd)))
-    extendedHeader : Uint8Array;
 }
 
 
@@ -113,21 +116,6 @@ export enum VideoCodec {
     Screen2 = 6,
     AVC = 7
 }
-
-@Variant((i : VideoTag) => i.codec === VideoCodec.H263)
-export class H263VideoTag extends VideoTag {}
-
-@Variant((i : VideoTag) => i.codec === VideoCodec.Screen)
-export class ScreenVideoTag extends VideoTag {}
-
-@Variant((i : VideoTag) => i.codec === VideoCodec.VP6)
-export class VP6VideoTag extends VideoTag {}
-
-@Variant((i : VideoTag) => i.codec === VideoCodec.VP6Alpha)
-export class VP6AlphaVideoTag extends VideoTag {}
-
-@Variant((i : VideoTag) => i.codec === VideoCodec.Screen2)
-export class Screen2VideoTag extends VideoTag {}
 
 export enum AVCPacketType {
     SequenceHeader = 0,
