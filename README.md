@@ -1,6 +1,6 @@
 # @/flv
 > **[📜 Video File Format Specification Version 10](https://www.adobe.com/content/dam/acom/en/devnet/flv/video_file_format_spec_v10.pdf)**
-> Adobe’s Flash Video (FLV/F4V)
+> Adobe’s Flash Video (FLV)
 
 > 📝 **Alpha Quality**  
 > This library is new, no compatibility is currently guaranteed between 
