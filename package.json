@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "Adobe Flash Video (FLV)",
   "main": "dist/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "clean": "rimraf dist dist.esm",
     "build": "npm run clean && tsc -b && tsc -b tsconfig.esm.json",
