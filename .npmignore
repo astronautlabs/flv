@@ -3,3 +3,6 @@ dist/**/*.test.js
 dist/**/*.test.ts
 dist.esm/**/*.test.js
 dist.esm/**/*.test.ts
+
+src/**/*.test.ts
+src/**/*.example.ts
