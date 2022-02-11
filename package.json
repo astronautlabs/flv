@@ -7,8 +7,8 @@
     "clean": "rimraf dist dist.esm",
     "build": "npm run clean && tsc -b && tsc -b tsconfig.esm.json",
     "sample:server": "npm run build && node dist/server.example",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublishOnly": "npm run build"
+    "test": "npm run build && exit 0",
+    "prepublishOnly": "npm test"
   },
   "author": "Astronaut Labs",
   "license": "MIT",
