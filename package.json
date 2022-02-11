@@ -6,6 +6,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "repository": {
+    "url": "https://github.com/astronautlabs/flv.git"
+  },
   "scripts": {
     "clean": "rimraf dist dist.esm",
     "build": "npm run clean && tsc -b && tsc -b tsconfig.esm.json",
