@@ -40,17 +40,6 @@ export class FLVBodySerializer implements Serializer {
     }
 }
 
-export class Body extends BitstreamElement {
-    @Field(8*4) private previousTagSize0 : number;
-    @Field(0, { serializer: new FLVBodySerializer() }) tags : Tag[];
-}
-
-export enum TagType {
-    Audio = 8,
-    Video = 9,
-    ScriptObject = 18
-}
-
 export class Tag extends BitstreamElement {
     @Field(8) type : number;
     @Field(8*3) dataSize : number;
@@ -65,6 +54,17 @@ export class Tag extends BitstreamElement {
     
     @Field((i : AudioTag) => i.dataSize - i.measure(i => i.$dataStart, i => i.$dataEnd))
     data : Uint8Array;
+}
+
+export class Body extends BitstreamElement {
+    @Field(8*4) private previousTagSize0 : number;
+    @Field(0, { array: { type: Tag }, serializer: new FLVBodySerializer() }) tags : Tag[];
+}
+
+export enum TagType {
+    Audio = 8,
+    Video = 9,
+    ScriptObject = 18
 }
 
 export enum SoundFormat {
