@@ -46,8 +46,6 @@ export class Tag extends BitstreamElement {
     @Field(8*3) timestamp : number;
     @Field(8) timestampExtended : number;
     @Field(8*3) streamId : number = 0;
-    @Field(8*4) lookbackPointer : number;
-
     @Marker() $dataStart;
     @VariantMarker() $variant;
     @Marker() $dataEnd;
@@ -56,9 +54,15 @@ export class Tag extends BitstreamElement {
     data : Uint8Array;
 }
 
+export class BodyTagContainer extends BitstreamElement {
+    @Field(8*4) lookbackLength: number;
+    @Field() tag: Tag;
+
+}
+
 export class Body extends BitstreamElement {
-    @Field(8*4) private previousTagSize0 : number;
-    @Field(0, { array: { type: Tag }, serializer: new FLVBodySerializer() }) tags : Tag[];
+    @Field(0, { array: { type: BodyTagContainer }, serializer: new FLVBodySerializer() }) tags : BodyTagContainer[];
+    @Field(8*4) lastLookbackLength: number;
 }
 
 export enum TagType {
