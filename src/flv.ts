@@ -1,4 +1,4 @@
-import { BitstreamElement, BitstreamReader, BitstreamWriter, DefaultVariant, Field, FieldDefinition, Marker, Reserved, Serializer, Variant, VariantMarker } from "@astronautlabs/bitstream";
+import { BitstreamElement, BitstreamReader, BitstreamWriter, DefaultVariant, Field, FieldDefinition, IncompleteReadResult, Marker, Reserved, Serializer, Variant, VariantMarker } from "@astronautlabs/bitstream";
 import { AMF0 } from '@astronautlabs/amf';
 
 export class Header extends BitstreamElement {
@@ -25,7 +25,7 @@ export class DefaultHeader extends Header {
 
 
 export class FLVBodySerializer implements Serializer {
-    *read(reader: BitstreamReader, type: any, parent: BitstreamElement, field: FieldDefinition): Generator<number, any, unknown> {
+    *read(reader: BitstreamReader, type: any, parent: BitstreamElement, field: FieldDefinition): Generator<IncompleteReadResult, any, unknown> {
         let values : Tag[] = [];
         while (true) {
             let result = Tag.read(reader).next();
