@@ -1,5 +1,5 @@
 # @/flv
-> **[📜 Video File Format Specification Version 10](https://www.adobe.com/content/dam/acom/en/devnet/flv/video_file_format_spec_v10.pdf)**
+> **[📜 Video File Format Specification Version 10](https://rtmp.veriskope.com/pdf/video_file_format_spec_v10.pdf)**
 > Adobe’s Flash Video (FLV)
 
 > 📝 **Alpha Quality**  
