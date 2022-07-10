@@ -127,9 +127,16 @@ export enum AACPacketType {
 }
 
 @Variant((i : AudioTag) => i.format === SoundFormat.AAC)
-export class AACAudioTag extends Tag {
+export class AACAudioTag extends AudioTag {
     @Field(8) packetType : number;
 }
+
+@Variant((i: AACAudioTag) => i.packetType === 0)
+export class AACSequenceHeaderTag extends AACAudioTag {
+}
+
+@Variant((i: AACAudioTag) => i.packetType === 1)
+export class AACAudioFrameTag extends AACAudioTag {}
 
 @Variant((i : Tag) => i.header.type === TagType.Video)
 export class VideoTag extends Tag {
