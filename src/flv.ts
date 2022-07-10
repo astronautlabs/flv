@@ -61,7 +61,7 @@ export class Tag extends BitstreamElement {
     @VariantMarker() $variant;
     @Marker() $dataEnd;
     
-    @Field((i : AudioTag) => i.header.dataSize * 8 - i.bitsRead - i.header.measure())
+    @Field((i : AudioTag) => i.header.dataSize * 8 - i.bitsRead)
     data : Uint8Array;
 }
 
