@@ -43,8 +43,18 @@ export class FLVBodySerializer implements Serializer {
 export class TagHeader extends BitstreamElement {
     @Field(8) type : number;
     @Field(8*3) dataSize : number;
-    @Field(8*3) timestamp : number;
+    @Field(8*3) basicTimestamp : number;
     @Field(8) timestampExtended : number;
+    
+    get timestamp() {
+        return this.timestampExtended << 24 | this.timestamp;
+    }
+
+    set timestamp(value) {
+        this.timestampExtended = value >> 24;
+        this.timestamp = value & 0x00FFFFFF;
+    }
+
     @Field(8*3) streamId : number = 0;
 }
 
