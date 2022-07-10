@@ -52,7 +52,7 @@ export class TagHeader extends BitstreamElement {
 
     set timestamp(value) {
         this.timestampExtended = value >> 24;
-        this.timestamp = value & 0x00FFFFFF;
+        this.basicTimestamp = value & 0x00FFFFFF;
     }
 
     @Field(8*3) streamId : number = 0;
