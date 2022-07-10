@@ -47,7 +47,7 @@ export class TagHeader extends BitstreamElement {
     @Field(8) timestampExtended : number;
     
     get timestamp() {
-        return this.timestampExtended << 24 | this.timestamp;
+        return this.timestampExtended << 24 | this.basicTimestamp;
     }
 
     set timestamp(value) {
