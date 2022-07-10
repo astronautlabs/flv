@@ -63,6 +63,11 @@ export class Tag extends BitstreamElement {
     
     @Field((i : AudioTag) => i.header.dataSize * 8 - i.bitsRead)
     data : Uint8Array;
+
+    onVariationFrom(source: Tag) {
+        // Make sure we carry our header into variants
+        this.header = source.header;
+    }
 }
 
 export class BodyTag extends BitstreamElement {
