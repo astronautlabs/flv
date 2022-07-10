@@ -40,28 +40,39 @@ export class FLVBodySerializer implements Serializer {
     }
 }
 
-export class Tag extends BitstreamElement {
+export class TagHeader extends BitstreamElement {
     @Field(8) type : number;
     @Field(8*3) dataSize : number;
     @Field(8*3) timestamp : number;
     @Field(8) timestampExtended : number;
     @Field(8*3) streamId : number = 0;
+}
+
+/**
+ * Represents an FLV tag without its header. Because the FLV tag needs to know how large it is, it is
+ * the responsibility of the container to provide `header` using an initializer.
+ * An FLV file or raw FLV stream consists of BodyTags, which in turn contain these Tags. 
+ * RTMP skips the FLV headers, instead synthesizing them from the underlying RTMP headers.
+ */
+export class Tag extends BitstreamElement {
+    header: TagHeader;
+
     @Marker() $dataStart;
     @VariantMarker() $variant;
     @Marker() $dataEnd;
     
-    @Field((i : AudioTag) => i.dataSize - i.measure(i => i.$dataStart, i => i.$dataEnd))
+    @Field((i : AudioTag) => i.header.dataSize * 8 - i.bitsRead - i.measure(t => t.header))
     data : Uint8Array;
 }
 
-export class BodyTagContainer extends BitstreamElement {
+export class BodyTag extends BitstreamElement {
     @Field(8*4) lookbackLength: number;
-    @Field() tag: Tag;
-
+    @Field(0) header: TagHeader;
+    @Field(0, { initializer: (tag: Tag, container: BodyTag) => tag.header = container.header }) tag: Tag;
 }
 
 export class Body extends BitstreamElement {
-    @Field(0, { array: { type: BodyTagContainer }, serializer: new FLVBodySerializer() }) tags : BodyTagContainer[];
+    @Field(0, { array: { type: BodyTag }, serializer: new FLVBodySerializer() }) tags : BodyTag[];
     @Field(8*4) lastLookbackLength: number;
 }
 
@@ -87,7 +98,7 @@ export enum SoundFormat {
     DeviceSpecific = 15
 }
 
-@Variant((i : Tag) => i.type === TagType.Audio)
+@Variant((i : Tag) => i.header.type === TagType.Audio)
 export class AudioTag extends Tag {
     @Field(4) format : number;
     @Field(2) rate : number;
@@ -105,7 +116,7 @@ export class AACAudioTag extends Tag {
     @Field(8) packetType : number;
 }
 
-@Variant((i : Tag) => i.type === TagType.Video)
+@Variant((i : Tag) => i.header.type === TagType.Video)
 export class VideoTag extends Tag {
     @Field(4) frameType : number;
     @Field(4) codec : number;
@@ -157,7 +168,7 @@ export class DataObject extends BitstreamElement {
     @Field() data : AMF0.Value;
 }
 
-@Variant((i : Tag) => i.type === TagType.ScriptObject)
+@Variant((i : Tag) => i.header.type === TagType.ScriptObject)
 export class DataObjectTag extends Tag {
     @Field(0, { 
         array: { 
