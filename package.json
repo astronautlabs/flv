@@ -1,6 +1,6 @@
 {
   "name": "@astronautlabs/flv",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "Adobe Flash Video (FLV)",
   "main": "dist/index.js",
   "publishConfig": {
