@@ -154,6 +154,23 @@ export enum VideoCodec {
     AVC = 7
 }
 
+export enum AudioCodec {
+    LinearPCM = 0,
+    ADPCM = 1,
+    MP3 = 2,
+    LinearPCMLE = 3,
+    Nellymoser16kHz = 4,
+    Nellymoser8kHz = 5,
+    Nellymoser = 6,
+    G711A = 7,
+    G711mu = 8,
+    Reserved = 9,
+    AAC = 10,
+    Speex = 11,
+    MP38kHz = 14,
+    DeviceSpecific = 15
+}
+
 export enum AVCPacketType {
     SequenceHeader = 0,
     NALU = 1,
