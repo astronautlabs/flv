@@ -12,8 +12,8 @@
   "scripts": {
     "clean": "rimraf dist dist.esm",
     "build": "npm run clean && tsc -b && tsc -b tsconfig.esm.json",
+    "test": "npm run build && node --enable-source-maps dist/test",
     "sample:server": "npm run build && node dist/server.example",
-    "test": "npm run build && exit 0",
     "prepublishOnly": "npm test"
   },
   "author": "Astronaut Labs",
@@ -21,7 +21,7 @@
   "devDependencies": {
     "@types/chai": "^4.3.0",
     "chai": "^4.3.6",
-    "razmin": "^1.1.7",
+    "razmin": "^1.2.0",
     "rimraf": "^3.0.2",
     "typescript": "^4.5.5"
   },
