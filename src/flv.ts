@@ -71,7 +71,7 @@ export class Tag extends BitstreamElement {
     @VariantMarker() $variant;
     @Marker() $dataEnd;
     
-    @Field((i : AudioTag) => i.header.dataSize * 8 - i.bitsRead, { buffer: { truncate: false }})
+    @Field((i : AudioTag) => i.header ? i.header.dataSize * 8 - i.bitsRead : 0, { buffer: { truncate: false }})
     data : Uint8Array;
 
     onVariationFrom(source: Tag) {
