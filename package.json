@@ -27,6 +27,6 @@
   },
   "dependencies": {
     "@astronautlabs/amf": "^0.0.6",
-    "@astronautlabs/bitstream": "4.1"
+    "@astronautlabs/bitstream": "^4.2.2"
   }
 }
